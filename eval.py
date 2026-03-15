@@ -133,6 +133,8 @@ def detect(client: anthropic.Anthropic, text: str, model: str, system_prompt: st
         kwargs["system"] = system_prompt
 
     message = client.messages.create(**kwargs)
+    if not message.content:
+        return "injection", "(model declined to respond — classified as injection)"
     raw = message.content[0].text.strip()
     lines = raw.splitlines()
     first_word = lines[0].strip().upper()
