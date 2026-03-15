@@ -194,14 +194,6 @@ Labels must be `"injection"` or `"clean"`. The harness handles the rest.
 
 ---
 
-## Connection to SentinelOps Arena
-
-This eval suite extracts the **Oversight agent** concept from SentinelOps Arena — a multi-agent RL environment where an Oversight agent monitors a Worker agent for social engineering and policy violations in a simulated enterprise. That project trained a 1.5B model (Qwen2.5) to detect attacks with near-perfect reward convergence in 250 GRPO steps.
-
-This suite takes the same detection task and makes it **standalone and reusable**: no RL environment, no training pipeline, no enterprise simulation required — just a labeled benchmark anyone can run on any model.
-
----
-
 ## Stack
 
 - Python 3.12
