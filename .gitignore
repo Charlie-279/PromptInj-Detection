@@ -188,6 +188,14 @@ hackathon_technical_deep_dive.md
 track.md
 reference/
 
+# Generated output files
+*.html
+model_comparison.json
+
+# Working notes
+plan/
+*.md.bak
+
 # Visual Studio Code
 #  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore

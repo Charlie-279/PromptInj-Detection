@@ -218,6 +218,140 @@ def print_report(results: list[EvalResult], metrics: dict, per_category: dict, v
 
 
 # ---------------------------------------------------------------------------
+# HTML report
+# ---------------------------------------------------------------------------
+
+def generate_html_report(
+    results: list[EvalResult],
+    metrics: dict,
+    per_category: dict,
+    model: str,
+    prompt_mode: str,
+) -> str:
+    from datetime import datetime
+
+    label_colors = {"injection": "#ff4444", "clean": "#00cc66"}
+    status_icon = {True: "✓", False: "✗"}
+    status_color = {True: "#00cc66", False: "#ff4444"}
+
+    # Metric cards
+    def card(title, value, subtitle=""):
+        return f"""
+        <div class="card">
+          <div class="card-title">{title}</div>
+          <div class="card-value">{value}</div>
+          <div class="card-sub">{subtitle}</div>
+        </div>"""
+
+    cards = (
+        card("Accuracy",  f"{metrics['accuracy']:.1%}",  f"{metrics['correct']}/{metrics['total']} correct") +
+        card("Precision", f"{metrics['precision']:.1%}", "flagged injections that were real") +
+        card("Recall",    f"{metrics['recall']:.1%}",    "real injections caught") +
+        card("F1 Score",  f"{metrics['f1']:.1%}",        "harmonic mean of precision &amp; recall")
+    )
+
+    # Category rows
+    cat_rows = ""
+    for cat, m in per_category.items():
+        pct = m["accuracy"] * 100
+        color = "#00cc66" if pct == 100 else "#ffaa00" if pct >= 80 else "#ff4444"
+        cat_rows += f"""
+        <tr>
+          <td class="cat-name">{cat}</td>
+          <td>
+            <div class="bar-bg">
+              <div class="bar-fill" style="width:{pct:.0f}%;background:{color}"></div>
+            </div>
+          </td>
+          <td style="color:{color};font-weight:700">{pct:.0f}%</td>
+          <td style="color:#888">{m['correct']}/{m['total']}</td>
+        </tr>"""
+
+    # Prompt rows
+    prompt_rows = ""
+    for r in results:
+        bg = "#0d1f0d" if r.correct else "#1f0d0d"
+        label_color = label_colors[r.true_label]
+        icon = status_icon[r.correct]
+        icon_color = status_color[r.correct]
+        pred_note = "" if r.correct else f' <span style="color:#ff4444">→ predicted {r.predicted_label.upper()}</span>'
+        safe_text = r.text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        safe_reason = r.explanation.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        prompt_rows += f"""
+        <tr style="background:{bg}">
+          <td style="color:{icon_color};font-size:1.1em;text-align:center">{icon}</td>
+          <td><span class="label" style="background:{label_color}">{r.true_label.upper()}</span>{pred_note}</td>
+          <td style="color:#aaa;font-size:0.8em">{r.category}</td>
+          <td style="font-size:0.85em">{safe_text[:120]}{"…" if len(r.text) > 120 else ""}</td>
+          <td style="font-size:0.8em;color:#888">{safe_reason}</td>
+        </tr>"""
+
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Injection Eval — Results</title>
+<style>
+  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  body {{ background: #0a0f1a; color: #e0e0e0; font-family: 'IBM Plex Mono', 'Courier New', monospace; padding: 2rem; }}
+  h1 {{ color: #00ff41; font-size: 1.4rem; letter-spacing: 2px; margin-bottom: 0.3rem; }}
+  .meta {{ color: #555; font-size: 0.8rem; margin-bottom: 2rem; }}
+  h2 {{ color: #4488ff; font-size: 0.95rem; letter-spacing: 1px; margin: 2rem 0 1rem; text-transform: uppercase; }}
+  .cards {{ display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }}
+  .card {{ background: #111827; border: 1px solid #1e3a5f; border-radius: 6px; padding: 1.2rem 1.5rem; min-width: 160px; flex: 1; }}
+  .card-title {{ color: #4488ff; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; }}
+  .card-value {{ color: #00ff41; font-size: 2rem; font-weight: 700; margin: 0.3rem 0; }}
+  .card-sub {{ color: #555; font-size: 0.72rem; }}
+  table {{ width: 100%; border-collapse: collapse; font-size: 0.82rem; }}
+  th {{ background: #111827; color: #4488ff; text-align: left; padding: 0.6rem 0.8rem; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; }}
+  td {{ padding: 0.5rem 0.8rem; border-bottom: 1px solid #1a1a2e; vertical-align: top; }}
+  tr:hover td {{ background: #111827; }}
+  .cat-name {{ color: #ccc; min-width: 200px; }}
+  .bar-bg {{ background: #1a1a2e; border-radius: 3px; height: 10px; width: 180px; }}
+  .bar-fill {{ height: 10px; border-radius: 3px; transition: width 0.3s; }}
+  .label {{ display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 0.72rem; font-weight: 700; color: #fff; }}
+  .conf {{ display: flex; gap: 1rem; margin-top: 0.5rem; }}
+  .conf-item {{ background: #111827; border: 1px solid #1e3a5f; border-radius: 4px; padding: 0.6rem 1rem; font-size: 0.8rem; }}
+  .conf-val {{ color: #00ff41; font-size: 1.3rem; font-weight: 700; }}
+  .conf-label {{ color: #555; font-size: 0.7rem; }}
+</style>
+</head>
+<body>
+
+<h1>⚡ PROMPT INJECTION DETECTION EVAL</h1>
+<div class="meta">Model: {model} &nbsp;|&nbsp; Prompt mode: {prompt_mode} &nbsp;|&nbsp; {timestamp}</div>
+
+<h2>Overall Metrics</h2>
+<div class="cards">{cards}</div>
+
+<h2>Confusion Matrix</h2>
+<div class="conf">
+  <div class="conf-item"><div class="conf-val" style="color:#00cc66">{metrics['tp']}</div><div class="conf-label">True Positives<br>caught injections</div></div>
+  <div class="conf-item"><div class="conf-val" style="color:#ff4444">{metrics['fp']}</div><div class="conf-label">False Positives<br>clean → flagged</div></div>
+  <div class="conf-item"><div class="conf-val" style="color:#ff4444">{metrics['fn']}</div><div class="conf-label">False Negatives<br>injection missed</div></div>
+  <div class="conf-item"><div class="conf-val" style="color:#00cc66">{metrics['tn']}</div><div class="conf-label">True Negatives<br>clean approved</div></div>
+</div>
+
+<h2>Per-Category Accuracy</h2>
+<table>
+  <thead><tr><th>Category</th><th>Accuracy</th><th>Score</th><th>Count</th></tr></thead>
+  <tbody>{cat_rows}</tbody>
+</table>
+
+<h2>Per-Prompt Results</h2>
+<table>
+  <thead><tr><th></th><th>Label</th><th>Category</th><th>Prompt</th><th>Detector Reasoning</th></tr></thead>
+  <tbody>{prompt_rows}</tbody>
+</table>
+
+</body>
+</html>"""
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -233,6 +367,8 @@ def main():
                         help="Print each prompt result as it runs")
     parser.add_argument("--output", default=None,
                         help="Optional path to write results JSON")
+    parser.add_argument("--html", default=None,
+                        help="Optional path to write HTML report (e.g. report.html)")
     args = parser.parse_args()
 
     api_key = os.environ.get("ANTHROPIC_API_KEY")
@@ -278,6 +414,12 @@ def main():
         with open(args.output, "w") as f:
             json.dump(output_data, f, indent=2)
         print(f"Results saved to {args.output}\n")
+
+    if args.html:
+        html = generate_html_report(results, metrics, per_category, args.model, args.prompt_mode)
+        with open(args.html, "w") as f:
+            f.write(html)
+        print(f"HTML report saved to {args.html}\n")
 
 
 if __name__ == "__main__":
