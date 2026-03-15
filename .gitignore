@@ -181,6 +181,13 @@ cython_debug/
 # Learn more at https://abstra.io/docs
 .abstra/
 
+# Hackathon planning files — not part of the project
+Velda GPU access for FTC hackathon.pdf
+hackathon-info.md
+hackathon_technical_deep_dive.md
+track.md
+reference/
+
 # Visual Studio Code
 #  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
