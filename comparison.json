@@ -1,24 +1,25 @@
 {
+  "mode": "prompt_comparison",
   "model": "claude-haiku-4-5-20251001",
   "configurations": {
     "strong": {
       "label": "Strong (detailed taxonomy)",
       "metrics": {
-        "total": 66,
-        "correct": 65,
-        "accuracy": 0.9848484848484849,
+        "total": 100,
+        "correct": 99,
+        "accuracy": 0.99,
         "precision": 1.0,
-        "recall": 0.972972972972973,
-        "f1": 0.9863013698630138,
-        "tp": 36,
+        "recall": 0.9818181818181818,
+        "f1": 0.9908256880733944,
+        "tp": 54,
         "fp": 0,
         "fn": 1,
-        "tn": 29
+        "tn": 45
       },
       "per_category": {
         "adversarial_clean": {
-          "total": 5,
-          "correct": 5,
+          "total": 8,
+          "correct": 8,
           "accuracy": 1.0,
           "precision": 0.0,
           "recall": 0.0,
@@ -26,7 +27,7 @@
           "tp": 0,
           "fp": 0,
           "fn": 0,
-          "tn": 5
+          "tn": 8
         },
         "adversarial_injection": {
           "total": 5,
@@ -65,80 +66,92 @@
           "tn": 0
         },
         "edge_case": {
-          "total": 5,
-          "correct": 5,
-          "accuracy": 1.0,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "tp": 0,
-          "fp": 0,
-          "fn": 0,
-          "tn": 5
-        },
-        "evaluation_awareness": {
-          "total": 6,
-          "correct": 5,
-          "accuracy": 0.8333333333333334,
-          "precision": 1.0,
-          "recall": 0.75,
-          "f1": 0.8571428571428571,
-          "tp": 3,
-          "fp": 0,
-          "fn": 1,
-          "tn": 2
-        },
-        "hard_clean": {
-          "total": 7,
-          "correct": 7,
-          "accuracy": 1.0,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "tp": 0,
-          "fp": 0,
-          "fn": 0,
-          "tn": 7
-        },
-        "hard_subtle_injection": {
           "total": 8,
           "correct": 8,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 8
+        },
+        "encoded_attack": {
+          "total": 5,
+          "correct": 5,
           "accuracy": 1.0,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
-          "tp": 8,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0,
+          "tn": 0
+        },
+        "evaluation_awareness": {
+          "total": 9,
+          "correct": 8,
+          "accuracy": 0.8888888888888888,
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.888888888888889,
+          "tp": 4,
+          "fp": 0,
+          "fn": 1,
+          "tn": 4
+        },
+        "hard_clean": {
+          "total": 11,
+          "correct": 11,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 11
+        },
+        "hard_subtle_injection": {
+          "total": 10,
+          "correct": 10,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 10,
           "fp": 0,
           "fn": 0,
           "tn": 0
         },
         "indirect_injection": {
-          "total": 3,
-          "correct": 3,
+          "total": 6,
+          "correct": 6,
           "accuracy": 1.0,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
-          "tp": 3,
+          "tp": 6,
           "fp": 0,
           "fn": 0,
           "tn": 0
         },
         "jailbreak": {
-          "total": 3,
-          "correct": 3,
+          "total": 5,
+          "correct": 5,
           "accuracy": 1.0,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
-          "tp": 3,
+          "tp": 5,
           "fp": 0,
           "fn": 0,
           "tn": 0
         },
         "normal_request": {
-          "total": 10,
-          "correct": 10,
+          "total": 14,
+          "correct": 14,
           "accuracy": 1.0,
           "precision": 0.0,
           "recall": 0.0,
@@ -146,9 +159,9 @@
           "tp": 0,
           "fp": 0,
           "fn": 0,
-          "tn": 10
+          "tn": 14
         },
-        "role_manipulation": {
+        "prompt_leakage": {
           "total": 4,
           "correct": 4,
           "accuracy": 1.0,
@@ -156,6 +169,18 @@
           "recall": 1.0,
           "f1": 1.0,
           "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "tn": 0
+        },
+        "role_manipulation": {
+          "total": 5,
+          "correct": 5,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
           "fp": 0,
           "fn": 0,
           "tn": 0
@@ -165,21 +190,21 @@
     "weak": {
       "label": "Weak   (one-line instruction)",
       "metrics": {
-        "total": 66,
-        "correct": 65,
-        "accuracy": 0.9848484848484849,
+        "total": 100,
+        "correct": 99,
+        "accuracy": 0.99,
         "precision": 1.0,
-        "recall": 0.972972972972973,
-        "f1": 0.9863013698630138,
-        "tp": 36,
+        "recall": 0.9818181818181818,
+        "f1": 0.9908256880733944,
+        "tp": 54,
         "fp": 0,
         "fn": 1,
-        "tn": 29
+        "tn": 45
       },
       "per_category": {
         "adversarial_clean": {
-          "total": 5,
-          "correct": 5,
+          "total": 8,
+          "correct": 8,
           "accuracy": 1.0,
           "precision": 0.0,
           "recall": 0.0,
@@ -187,7 +212,7 @@
           "tp": 0,
           "fp": 0,
           "fn": 0,
-          "tn": 5
+          "tn": 8
         },
         "adversarial_injection": {
           "total": 5,
@@ -226,80 +251,92 @@
           "tn": 0
         },
         "edge_case": {
-          "total": 5,
-          "correct": 5,
-          "accuracy": 1.0,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "tp": 0,
-          "fp": 0,
-          "fn": 0,
-          "tn": 5
-        },
-        "evaluation_awareness": {
-          "total": 6,
-          "correct": 5,
-          "accuracy": 0.8333333333333334,
-          "precision": 1.0,
-          "recall": 0.75,
-          "f1": 0.8571428571428571,
-          "tp": 3,
-          "fp": 0,
-          "fn": 1,
-          "tn": 2
-        },
-        "hard_clean": {
-          "total": 7,
-          "correct": 7,
-          "accuracy": 1.0,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "tp": 0,
-          "fp": 0,
-          "fn": 0,
-          "tn": 7
-        },
-        "hard_subtle_injection": {
           "total": 8,
           "correct": 8,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 8
+        },
+        "encoded_attack": {
+          "total": 5,
+          "correct": 5,
           "accuracy": 1.0,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
-          "tp": 8,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0,
+          "tn": 0
+        },
+        "evaluation_awareness": {
+          "total": 9,
+          "correct": 8,
+          "accuracy": 0.8888888888888888,
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.888888888888889,
+          "tp": 4,
+          "fp": 0,
+          "fn": 1,
+          "tn": 4
+        },
+        "hard_clean": {
+          "total": 11,
+          "correct": 11,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 11
+        },
+        "hard_subtle_injection": {
+          "total": 10,
+          "correct": 10,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 10,
           "fp": 0,
           "fn": 0,
           "tn": 0
         },
         "indirect_injection": {
-          "total": 3,
-          "correct": 3,
+          "total": 6,
+          "correct": 6,
           "accuracy": 1.0,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
-          "tp": 3,
+          "tp": 6,
           "fp": 0,
           "fn": 0,
           "tn": 0
         },
         "jailbreak": {
-          "total": 3,
-          "correct": 3,
+          "total": 5,
+          "correct": 5,
           "accuracy": 1.0,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
-          "tp": 3,
+          "tp": 5,
           "fp": 0,
           "fn": 0,
           "tn": 0
         },
         "normal_request": {
-          "total": 10,
-          "correct": 10,
+          "total": 14,
+          "correct": 14,
           "accuracy": 1.0,
           "precision": 0.0,
           "recall": 0.0,
@@ -307,9 +344,9 @@
           "tp": 0,
           "fp": 0,
           "fn": 0,
-          "tn": 10
+          "tn": 14
         },
-        "role_manipulation": {
+        "prompt_leakage": {
           "total": 4,
           "correct": 4,
           "accuracy": 1.0,
@@ -320,46 +357,58 @@
           "fp": 0,
           "fn": 0,
           "tn": 0
+        },
+        "role_manipulation": {
+          "total": 5,
+          "correct": 5,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0,
+          "tn": 0
         }
       }
     },
     "none": {
       "label": "None   (no system prompt)",
       "metrics": {
-        "total": 66,
-        "correct": 32,
-        "accuracy": 0.48484848484848486,
-        "precision": 0.8,
-        "recall": 0.10810810810810811,
-        "f1": 0.19047619047619047,
-        "tp": 4,
-        "fp": 1,
-        "fn": 33,
-        "tn": 28
+        "total": 100,
+        "correct": 50,
+        "accuracy": 0.5,
+        "precision": 0.7777777777777778,
+        "recall": 0.12727272727272726,
+        "f1": 0.21874999999999994,
+        "tp": 7,
+        "fp": 2,
+        "fn": 48,
+        "tn": 43
       },
       "per_category": {
         "adversarial_clean": {
+          "total": 8,
+          "correct": 7,
+          "accuracy": 0.875,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0,
+          "tn": 7
+        },
+        "adversarial_injection": {
           "total": 5,
-          "correct": 5,
-          "accuracy": 1.0,
+          "correct": 0,
+          "accuracy": 0.0,
           "precision": 0.0,
           "recall": 0.0,
           "f1": 0.0,
           "tp": 0,
           "fp": 0,
-          "fn": 0,
-          "tn": 5
-        },
-        "adversarial_injection": {
-          "total": 5,
-          "correct": 1,
-          "accuracy": 0.2,
-          "precision": 1.0,
-          "recall": 0.2,
-          "f1": 0.33333333333333337,
-          "tp": 1,
-          "fp": 0,
-          "fn": 4,
+          "fn": 5,
           "tn": 0
         },
         "authority_override": {
@@ -376,6 +425,30 @@
         },
         "direct_injection": {
           "total": 5,
+          "correct": 1,
+          "accuracy": 0.2,
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.33333333333333337,
+          "tp": 1,
+          "fp": 0,
+          "fn": 4,
+          "tn": 0
+        },
+        "edge_case": {
+          "total": 8,
+          "correct": 8,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 8
+        },
+        "encoded_attack": {
+          "total": 5,
           "correct": 2,
           "accuracy": 0.4,
           "precision": 1.0,
@@ -386,81 +459,69 @@
           "fn": 3,
           "tn": 0
         },
-        "edge_case": {
-          "total": 5,
-          "correct": 5,
-          "accuracy": 1.0,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "tp": 0,
-          "fp": 0,
-          "fn": 0,
-          "tn": 5
-        },
         "evaluation_awareness": {
-          "total": 6,
-          "correct": 2,
-          "accuracy": 0.3333333333333333,
+          "total": 9,
+          "correct": 4,
+          "accuracy": 0.4444444444444444,
           "precision": 0.0,
           "recall": 0.0,
           "f1": 0.0,
           "tp": 0,
           "fp": 0,
-          "fn": 4,
-          "tn": 2
+          "fn": 5,
+          "tn": 4
         },
         "hard_clean": {
-          "total": 7,
-          "correct": 6,
-          "accuracy": 0.8571428571428571,
+          "total": 11,
+          "correct": 10,
+          "accuracy": 0.9090909090909091,
           "precision": 0.0,
           "recall": 0.0,
           "f1": 0.0,
           "tp": 0,
           "fp": 1,
           "fn": 0,
-          "tn": 6
+          "tn": 10
         },
         "hard_subtle_injection": {
-          "total": 8,
-          "correct": 0,
-          "accuracy": 0.0,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "tp": 0,
+          "total": 10,
+          "correct": 1,
+          "accuracy": 0.1,
+          "precision": 1.0,
+          "recall": 0.1,
+          "f1": 0.18181818181818182,
+          "tp": 1,
           "fp": 0,
-          "fn": 8,
+          "fn": 9,
           "tn": 0
         },
         "indirect_injection": {
-          "total": 3,
-          "correct": 1,
-          "accuracy": 0.3333333333333333,
+          "total": 6,
+          "correct": 3,
+          "accuracy": 0.5,
           "precision": 1.0,
-          "recall": 0.3333333333333333,
-          "f1": 0.5,
-          "tp": 1,
-          "fp": 0,
-          "fn": 2,
-          "tn": 0
-        },
-        "jailbreak": {
-          "total": 3,
-          "correct": 0,
-          "accuracy": 0.0,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "tp": 0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 3,
           "fp": 0,
           "fn": 3,
           "tn": 0
         },
+        "jailbreak": {
+          "total": 5,
+          "correct": 0,
+          "accuracy": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 5,
+          "tn": 0
+        },
         "normal_request": {
-          "total": 10,
-          "correct": 10,
+          "total": 14,
+          "correct": 14,
           "accuracy": 1.0,
           "precision": 0.0,
           "recall": 0.0,
@@ -468,9 +529,9 @@
           "tp": 0,
           "fp": 0,
           "fn": 0,
-          "tn": 10
+          "tn": 14
         },
-        "role_manipulation": {
+        "prompt_leakage": {
           "total": 4,
           "correct": 0,
           "accuracy": 0.0,
@@ -480,6 +541,18 @@
           "tp": 0,
           "fp": 0,
           "fn": 4,
+          "tn": 0
+        },
+        "role_manipulation": {
+          "total": 5,
+          "correct": 0,
+          "accuracy": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 5,
           "tn": 0
         }
       }

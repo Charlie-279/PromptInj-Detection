@@ -91,28 +91,27 @@ This is the **sensitivity/specificity tradeoff in action**: narrowing one decisi
 ```
   Metric        Strong (detailed taxonomy)   Weak (one-line instruction)  None (no system prompt)
   ────────────  ──────────────────────────   ───────────────────────────  ───────────────────────
-  Accuracy      98.5%  (65/66)              98.5%  (65/66)               48.5%  (32/66)
-  Precision     100.0%                      100.0%                        80.0%
-  Recall        97.3%                        97.3%                        10.8%
-  F1 Score       98.6%                        98.6%                        19.0%
+  Accuracy      99.0%  (99/100)             99.0%  (99/100)              50.0%  (50/100)
+  Precision     100.0%                      100.0%                        77.8%
+  Recall         98.2%                        98.2%                        12.7%
+  F1 Score       99.1%                        99.1%                        21.9%
 
   Per-category (None / no system prompt):
   authority_override      ░░░░░░░░░░   0%  (0/5)
-  role_manipulation       ░░░░░░░░░░   0%  (0/4)
-  jailbreak               ░░░░░░░░░░   0%  (0/3)
-  hard_subtle_injection   ░░░░░░░░░░   0%  (0/8)
+  role_manipulation       ░░░░░░░░░░   0%  (0/5)
+  jailbreak               ░░░░░░░░░░   0%  (0/5)
+  hard_subtle_injection   ░░░░░░░░░░   0%  (0/10)
+  encoded_attack          ░░░░░░░░░░   0%  (0/5)
   direct_injection        ████░░░░░░  40%  (2/5)
-  normal_request          ██████████ 100% (10/10)  ← clean prompts still handled correctly
+  normal_request          ██████████ 100% (14/14)  ← clean prompts still handled correctly
 ```
 
-*(Note: configuration comparison was run on the original 66-prompt corpus. Strong-mode results on the expanded 100-prompt corpus: 99.0%, F1 99.1%.)*
-
 **Key findings:**
-1. **Strong ≈ Weak**: a one-line instruction performs identically to a detailed taxonomy on this corpus — both at 98.5%. The attack categories are distinct enough that minimal framing suffices.
-2. **None collapses to 48.5%**: without any system prompt, the model has recall of only 10.8% — it catches almost nothing. It defaults to treating most inputs as clean because it has no instruction to look for injection.
+1. **Strong ≈ Weak**: a one-line instruction performs identically to a detailed taxonomy — both at 99.0%. The attack categories are distinct enough that minimal framing suffices.
+2. **None collapses to 50.0%**: without any system prompt, recall drops to only 12.7% — it catches almost nothing. It defaults to treating most inputs as clean because it has no instruction to look for injection.
 3. **The system prompt is load-bearing**: the delta between "weak" and "none" is where the real failure lives, not between "strong" and "weak."
 
-This demonstrates the harness measures real signal: the same model on the same corpus drops from F1 98.6% to F1 19.0% based solely on how the detector is configured.
+This demonstrates the harness measures real signal: the same model on the same corpus drops from F1 99.1% to F1 21.9% based solely on how the detector is configured.
 
 ---
 
